@@ -23,14 +23,13 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD="${SQL_PASSWORD}"
       - MYSQL_DATABASE="${SQL_DATABASE}"
-      - MYSQL_USER:="${SQL_USER}"
-      # - MYSQL_PASSWORD:${SQL_PASSWORD}
+      - MYSQL_USER="${SQL_USER}"
+      - MYSQL_PASSWORD="${SQL_PASSWORD}"
     volumes:
-      - ./mysql_data:/var/lib/mysql/
-      #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - dbdata:/var/lib/mysql
+    #   - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./.env
-    restart: "on-failure"
 
   nginx:
     build: ./nginx
@@ -43,6 +42,6 @@ services:
       - web
 
 volumes:
-  mysql_data:
+  dbdata:
   static_volume:
   media_volume:
