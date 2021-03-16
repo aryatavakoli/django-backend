@@ -34,4 +34,4 @@ An import is needed: ```example: from <appname>.view import <function>```
 And a urlpattern is needed: 
 ```ex: path('<some URI>', <function>,name="<a descriptive name>" ),```
 
-est it out at [http://localhost:1337](http://localhost:1337). No mounted folders. To apply changes, the image must be re-built.
+test it out at [http://localhost:1337](http://localhost:1337). No mounted folders. To apply changes, the image must be re-built.
