@@ -22,12 +22,12 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD="${SQL_PASSWORD}"
-      - MYSQL_DATABASE="${SQL_DATABASE}"
-      - MYSQL_USER="${SQL_USER}"
-      - MYSQL_PASSWORD="${SQL_PASSWORD}"
+      - MYSQL_DATABASE=${SQL_DATABASE}
+      - MYSQL_USER=${SQL_USER}
+      - MYSQL_PASSWORD=${SQL_PASSWORD}
     volumes:
-      - dbdata:/var/lib/mysql
-    #   - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./dbdata:/var/lib/mysql:rw
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     env_file:
       - ./.env
 
@@ -42,6 +42,6 @@ services:
       - web
 
 volumes:
-  dbdata:
+  # dbdata:
   static_volume:
   media_volume:
