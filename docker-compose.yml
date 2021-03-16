@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: ./app
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     command: gunicorn djangoproj.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/staticfiles
@@ -21,15 +21,15 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD:${SQL_PASSWORD}
-      - MYSQL_DATABASE:${DB_NAME}
-      - MYSQL_USER:${SQL_USER}
-      - MYSQL_PASSWORD:${SQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD="${SQL_PASSWORD}"
+      - MYSQL_DATABASE="${SQL_DATABASE}"
+      - MYSQL_USER:="${SQL_USER}"
+      # - MYSQL_PASSWORD:${SQL_PASSWORD}
     volumes:
-      - ./mysql_data:/var/lib/mysql/data/
-      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql_data:/var/lib/mysql/
+      #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
-      - .env
+      - ./.env
     restart: "on-failure"
 
   nginx:

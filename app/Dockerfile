@@ -1,11 +1,12 @@
 FROM python:3.8.5-alpine
 
 ENV SERVICE=/home/app
-ENV SERVICE_HOME=${SERVICE}/web
+ENV SERVICE_HOME=/home/app/web
+ENV USER=django
 
 # set work directory
 RUN mkdir -p $SERVICE
-RUN addgroup -S django && adduser -S django -G django
+RUN addgroup -S $USER && adduser -S $USER -G $USER
 
 # where the code lives
 RUN mkdir $SERVICE_HOME
@@ -18,6 +19,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
+COPY ./requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
@@ -25,10 +27,10 @@ RUN pip install -r requirements.txt
 COPY . $SERVICE_HOME
 
 # Copy entrypoint
-COPY ./entrypoint.sh $APP_HOME
+COPY ./entrypoint.sh $SERVICE_HOME
 
-RUN chown -R app:app $APP_HOME
+RUN chown -R $USER:$USER $SERVICE_HOME
 
-USER app
+USER $USER
 
 CMD ["/bin/bash", "/home/app/web/entrypoint.sh"]
