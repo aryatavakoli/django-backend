@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+
+'''
+Every view needs two things:
+1. An import: ex: from <appname>.view import <function>
+2. A urlpattern  ex: path('<some URI>', <function>,name="<a descriptive name>" ),
+'''
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]

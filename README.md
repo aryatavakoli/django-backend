@@ -1,7 +1,7 @@
 Put application under app/
 
-Add to settings.py
-
+In `apps/djangoprog/settings.py`
+```
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -10,5 +10,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "appname",
-]
+    "<appname>",
+] 
+```
+
+
+For every view created in your app, in `apps/djangoprog/urls.py`:
+
+An import is needed: ```example: from <appname>.view import <function>```
+
+And a urlpattern is needed: 
+```ex: path('<some URI>', <function>,name="<a descriptive name>" ),```
