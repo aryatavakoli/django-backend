@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 1300:80
+    volumes:
+      - static_volume:/app/static
+    depends_on:
+      - web
+    restart: "on-failure"
+
+  web:
+    build: .
+    command: sh -c "python manage.py makemigrations &&
+                    python manage.py migrate &&
+                    python manage.py initiate_admin &&
+                    python manage.py collectstatic &&
+                    gunicorn djangoapp.wsgi:application --bind 0.0.0.0:${APP_PORT}"
+    volumes:
+      - .:/djangoapp:rw # map data and files from parent directory in host to microservice directory in docker containe
+      - static_volume:/app/static
+    env_file:
+      - .env
+    image: djangoapp
+
+    expose:
+      - ${APP_PORT}
+    restart: "on-failure"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0.23
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD:${MYSQL_PASSWORD}
+      - MYSQL_DATABASE:${DB_NAME}
+      - MYSQL_USER:${MYSQL_USER}
+      - MYSQL_PASSWORD:${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: "on-failure"
+
+
+volumes:
+  postgres_data:
+  static_volume:
