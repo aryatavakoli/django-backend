@@ -22,4 +22,4 @@ An import is needed: ```example: from <appname>.views import <function>```
 And a urlpattern is needed: 
 ```ex: path('<some URI>', <function>,name="<a descriptive name>" ),```
 
-Access web app from `localhost:1337`
+est it out at [http://localhost:1337](http://localhost:1337). No mounted folders. To apply changes, the image must be re-built.
