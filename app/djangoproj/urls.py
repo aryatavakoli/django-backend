@@ -19,7 +19,7 @@ from django.urls import path
 
 '''
 Every view needs two things:
-1. An import: ex: from <appname>.view import <function>
+1. An import: ex: from <appname>.views import <function>
 2. A urlpattern  ex: path('<some URI>', <function>,name="<a descriptive name>" ),
 '''
 
