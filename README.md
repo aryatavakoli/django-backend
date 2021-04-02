@@ -1,8 +1,8 @@
 Creating a app:
 ```
-$ mkdir django-on-docker && cd django-on-docker
-$ mkdir app && cd app
-$ python3.8 -m venv env
+$ https://github.com/aryatavakoli/django-backend.git && cd django-backend 
+$ cd app
+$ python3 -m venv env
 $ source env/bin/activate
 (env)$ pip install django==3.0.7
 (env)$ python manage.py startapp <some_appname>
@@ -10,7 +10,7 @@ $ source env/bin/activate
 (env)$ python manage.py runserver
 ```
 
-In `apps/djangoprog/settings.py`
+In `apps/djangoprog/settings.py` add your app
 ```
 INSTALLED_APPS = [
     "django.contrib.admin",
