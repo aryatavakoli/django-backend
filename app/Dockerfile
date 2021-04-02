@@ -18,6 +18,12 @@ WORKDIR $SERVICE_HOME
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+RUN apk update \
+    && apk add --virtual build-deps gcc python3-dev musl-dev libffi-dev openssl-dev cargo \
+    && apk add gcc python3-dev musl-dev libffi-dev openssl-dev cargo\
+    && apk del build-deps \
+    && apk --no-cache add musl-dev linux-headers g++
+
 # install dependencies
 COPY ./requirements.txt .
 RUN pip install --upgrade pip
